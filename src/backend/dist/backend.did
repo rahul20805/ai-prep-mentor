@@ -1,0 +1,135 @@
+type WeeklyTimetable = 
+ record {
+   tasks: vec ScheduledTask;
+   weekStartTimestamp: Timestamp;
+ };
+type TodayTask = 
+ record {
+   estimatedMinutes: nat;
+   id: nat;
+   status: TaskStatus;
+   subject: Subject;
+   topic: text;
+ };
+type Timestamp = int;
+type TaskStatus = 
+ variant {
+   completed;
+   pending;
+   skipped;
+ };
+type SubjectAccuracy = 
+ record {
+   accuracyPercent: nat;
+   correctAttempts: nat;
+   subject: Subject;
+   totalAttempts: nat;
+ };
+type Subject = text;
+type ScheduledTask = 
+ record {
+   dayIndex: nat;
+   estimatedMinutes: nat;
+   id: nat;
+   priority: Priority;
+   rescheduledFromDay: opt nat;
+   status: TaskStatus;
+   subject: Subject;
+   topic: text;
+ };
+type Question = 
+ record {
+   correctOptionIndex: nat;
+   difficulty: Difficulty;
+   id: nat;
+   options: vec text;
+   questionText: text;
+   subject: Subject;
+   topic: text;
+   year: nat;
+ };
+type Priority = 
+ variant {
+   high;
+   low;
+   medium;
+ };
+type MessageRole = 
+ variant {
+   mentor;
+   user;
+ };
+type LectureCard = 
+ record {
+   channelTitle: text;
+   description: text;
+   duration: text;
+   id: text;
+   thumbnailUrl: text;
+   title: text;
+   videoUrl: text;
+   viewCount: text;
+ };
+type Difficulty = 
+ variant {
+   easy;
+   hard;
+   medium;
+ };
+type DashboardStats = 
+ record {
+   overallAccuracyPercent: nat;
+   todayCompletionPercent: nat;
+   totalStudyHoursThisWeek: nat;
+   weakSubjects: vec Subject;
+ };
+type DailyAccuracy = 
+ record {
+   accuracyPercent: nat;
+   date: text;
+   totalAttempts: nat;
+ };
+type ChatMessage = 
+ record {
+   content: text;
+   id: nat;
+   role: MessageRole;
+   timestamp: Timestamp;
+ };
+type AnalyticsSummary = 
+ record {
+   accuracyPerSubject: vec record {
+                             Subject;
+                             nat;
+                           };
+   dailyAccuracyLast7Days: vec DailyAccuracy;
+   totalStudyHoursThisWeek: nat;
+   weeklyStudyMinutesPerDay: vec record {
+                                   text;
+                                   nat;
+                                 };
+ };
+service : {
+  clearChatHistory: () -> ();
+  getAdminConfig: () ->
+   (record {
+      groqConfigured: bool;
+      youtubeConfigured: bool;
+    }) query;
+  getAnalyticsSummary: () -> (AnalyticsSummary) query;
+  getChatHistory: () -> (vec ChatMessage) query;
+  getDashboardStats: () -> (DashboardStats) query;
+  getLectureCards: (subject: text, searchQuery: opt text) ->
+   (vec LectureCard);
+  getSubjectAccuracy: () -> (vec SubjectAccuracy) query;
+  getTodayTasks: () -> (vec TodayTask) query;
+  getWeeklyTimetable: () -> (WeeklyTimetable);
+  listQuestions: (subject: opt Subject, difficulty: opt Difficulty) ->
+   (vec Question);
+  markTask: (taskId: nat, status: TaskStatus) -> (bool);
+  rescheduleSkipped: () -> ();
+  sendChatMessage: ("text": text) -> (vec ChatMessage);
+  setGroqApiKey: (key: text) -> (bool);
+  setYoutubeApiKey: (key: text) -> (bool);
+  submitAnswer: (questionId: nat, selectedOptionIndex: nat) -> (bool);
+}

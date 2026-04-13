@@ -1,0 +1,23 @@
+{
+  "overview": "AI Prep Mentor is a full-stack, AI-powered NEET/JEE exam preparation platform combining smart study scheduling, adaptive practice questions, performance analytics, and an AI mentor chatbot. The platform helps students maximize their exam scores through data-driven study planning and personalized coaching.",
+  "features": [
+    "Smart Dashboard with today's study tasks and quick progress stats",
+    "Weekly timetable with mark-complete/skip and auto-rescheduling of missed tasks",
+    "PYQ practice with 50+ questions, subject/difficulty filters, countdown timer, and accuracy tracking",
+    "Performance analytics with accuracy trends, subject breakdowns, and weak area highlights",
+    "AI Mentor chat with rule-based personalized study advice",
+    "Persistent sidebar navigation with mobile-responsive hamburger collapse"
+  ],
+  "category": "education",
+  "tags": [
+    "neet",
+    "jee",
+    "exam-prep",
+    "study-planner",
+    "ai-mentor",
+    "adaptive-learning",
+    "analytics",
+    "education"
+  ],
+  "last_updated": "2026-04-13T12:47:24.176Z"
+}

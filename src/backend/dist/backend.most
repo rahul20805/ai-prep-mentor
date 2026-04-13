@@ -1,0 +1,90 @@
+// Version: 1.0.0
+type AttemptRecord__498368364 =
+  {
+    attemptedAt : Timestamp__301639476;
+    isCorrect : Bool;
+    questionId : Nat;
+    selectedOptionIndex : Nat
+  };
+type ChatMessage__559859432 =
+  {
+    content : Text;
+    id : Nat;
+    role : MessageRole__512297421;
+    timestamp : Timestamp__301639476
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Difficulty__971497521 = {#easy; #hard; #medium};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type MessageRole__512297421 = {#mentor; #user};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Priority__936989968 = {#high; #low; #medium};
+type Question__614846531 =
+  {
+    correctOptionIndex : Nat;
+    difficulty : Difficulty__971497521;
+    id : Nat;
+    options : [Text];
+    questionText : Text;
+    subject : Subject__800708213;
+    topic : Text;
+    year : Nat
+  };
+type ScheduledTask__569195583 =
+  {
+    dayIndex : Nat;
+    estimatedMinutes : Nat;
+    id : Nat;
+    priority : Priority__936989968;
+    rescheduledFromDay : ?Nat;
+    status : TaskStatus__537038292;
+    subject : Subject__800708213;
+    topic : Text
+  };
+type Subject__800708213 = Text;
+type TaskStatus__537038292 = {#completed; #pending; #skipped};
+type Timestamp__301639476 = Int;
+actor {
+  stable config : {var groqApiKey : Text; var youtubeApiKey : Text};
+  stable questions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Question__614846531]];
+      var elementIndex : Nat__490723111
+    };
+  stable userAttempts :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<AttemptRecord__498368364>>;
+      var size : Nat__490723111
+    };
+  stable userChatIds :
+    {var root : Node__46230540<Principal, Nat>; var size : Nat__490723111};
+  stable userChatMessages :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<ChatMessage__559859432>>;
+      var size : Nat__490723111
+    };
+  stable userScheduledTasks :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<ScheduledTask__569195583>>;
+      var size : Nat__490723111
+    };
+  stable userTaskIds :
+    {var root : Node__46230540<Principal, Nat>; var size : Nat__490723111}
+};
